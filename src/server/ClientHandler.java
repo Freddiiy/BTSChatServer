@@ -12,6 +12,7 @@ public class ClientHandler implements Runnable{
     PrintWriter pw;
     Scanner scanner;
     BlockingQueue<MessageHandler> queue;
+    OnlineList onlineList;
 
     String clientName = "anon";
 
@@ -47,29 +48,31 @@ public class ClientHandler implements Runnable{
         pw.println("What is your name?: ");
         clientName = scanner.nextLine();
         pw.println("Hello " + this.clientName + " and welcome. \n---------------------------------------");
-        while (!msg.equals("CLOSE#")) {
+        while (!msg.equals("/CLOSE")) {
             try {
                 msg = scanner.nextLine();
             } catch (NoSuchElementException e) {
                 e.printStackTrace();
             }
 
+            String command;
             String data;
             try {
-                String[] action = msg.split("#", 2);
+                String[] action = msg.split(" ", 2);
+                command = action[0];
                 data = action[1];
 
-                switch(action[0]) {
-                    case "ALL":
+                switch(command) {
+                    case "/ALL":
                         //INSERT MESSAGE IN SHARED RESOURCE
                         sendToAll(clientName, data);
                         break;
-                    case "MSG":
+                    case "/MSG":
                         pw.println("Who do you want to send your message to");
                         String msgTo = scanner.nextLine();
                         sendMsgTo(clientName, msgTo, data);
                         break;
-                    case "CLOSE":
+                    case "/CLOSE":
                         pw.println("Closing connection...");
                         break;
                     default:
@@ -91,6 +94,7 @@ public class ClientHandler implements Runnable{
     }
 
     public void sendToAll(String clientName, String input) {
+        System.out.println(clientName + ": " + input);
     }
 
     public void sendMsgTo(String clientName,String msgTo, String input) {
