@@ -15,7 +15,7 @@ public class EchoServer {
     public void startServer() throws IOException {
         //TODO: lav message queue
         //TODO: lav listen til clienthandlers
-        CopyOnWriteArrayList<ClientHandler> clients= new CopyOnWriteArrayList<>();
+        CopyOnWriteArrayList<ClientHandler> clients= new CopyOnWriteArrayList<ClientHandler>();
         BlockingQueue<MessageHandler> messageHandler = new ArrayBlockingQueue<MessageHandler>(10);
 
         Dispatcher dispatcher = new Dispatcher(messageHandler, clients);
@@ -27,8 +27,8 @@ public class EchoServer {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         while (true) {
             Socket client = serverSocket.accept(); //Blocking call
-            //TODO: make cl with shared rescourse
             ClientHandler cl = new ClientHandler(client, messageHandler);
+            //TODO: make cl with shared rescourse
             clients.add(cl);
             //TODO: put cl i listen
             executorService.execute(cl);
