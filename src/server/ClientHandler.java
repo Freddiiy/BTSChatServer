@@ -8,13 +8,13 @@ import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 
 public class ClientHandler implements Runnable{
-    Socket client;
-    PrintWriter pw;
-    Scanner scanner;
-    BlockingQueue<MessageHandler> queue;
-    OnlineList onlineList;
+    private Socket client;
+    private PrintWriter pw;
+    private Scanner scanner;
+    private BlockingQueue<MessageHandler> queue;
+    private OnlineList onlineList;
 
-    String clientName = "anon";
+    private String clientName = "anon";
 
     private int id;
     private static int counter = 1;
@@ -30,6 +30,8 @@ public class ClientHandler implements Runnable{
         this.pw = new PrintWriter(client.getOutputStream(), true);
         this.scanner = new Scanner(client.getInputStream());
         this.queue = queue;
+
+        this.onlineList = new OnlineList();
     }
 
     public ClientHandler(Socket client, PrintWriter pw, Scanner scanner, BlockingQueue<MessageHandler> queue, String clientName) throws IOException {
@@ -46,38 +48,43 @@ public class ClientHandler implements Runnable{
     public void protocol() {
         String msg = "";
         pw.println("What is your name?: ");
-        clientName = scanner.nextLine();
-        pw.println("Hello " + this.clientName + " and welcome. \n---------------------------------------");
-        while (!msg.equals("/CLOSE")) {
+        try {
+            clientName = scanner.nextLine();
+        } catch (NoSuchElementException e) {
+            System.out.println("unexpected loss of connection to client");
+        }
+        onlineList.add(this);
+
+        pw.println("Hello " + this.clientName + " and welcome. \n---------------------------------------\n" +
+                "Online users: " + onlineList.getOnlineUsers()+ "\n---------------------------------------\n");
+
+        while (!msg.toUpperCase().equals("/CLOSE")) {
             try {
                 msg = scanner.nextLine();
             } catch (NoSuchElementException e) {
-                e.printStackTrace();
+                System.out.println("unexpected loss of connection to client");
+                break;
             }
 
             String command;
             String data;
             try {
                 String[] action = msg.split(" ", 2);
-                command = action[0];
+                command = action[0].toUpperCase();
                 data = action[1];
 
-                switch(command) {
-                    case "/ALL":
-                        //INSERT MESSAGE IN SHARED RESOURCE
-                        sendToAll(clientName, data);
-                        break;
-                    case "/MSG":
-                        pw.println("Who do you want to send your message to");
-                        String msgTo = scanner.nextLine();
+                switch (command) {
+                    case "/ALL" ->
+                            //INSERT MESSAGE IN SHARED RESOURCE
+                            sendToAll(clientName, "ALL", data);
+                    case "/MSG" -> {
+                        String dataArray[] = data.split(" ", 2);
+                        String msgTo = dataArray[0].toUpperCase();
+                        data = dataArray[1];
                         sendMsgTo(clientName, msgTo, data);
-                        break;
-                    case "/CLOSE":
-                        pw.println("Closing connection...");
-                        break;
-                    default:
-                        pw.println("Not recognised");
-                        break;
+                    }
+                    case "/ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
+                    default -> pw.println("Not recognised");
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 pw.println("Not recognised");
@@ -93,12 +100,27 @@ public class ClientHandler implements Runnable{
         }
     }
 
-    public void sendToAll(String clientName, String input) {
-        System.out.println(clientName + ": " + input);
+    public String insertName() {
+        try {
+            String tmpClientName = null;
+            tmpClientName = scanner.nextLine();
+            for (int i = 0; i < onlineList.getOnlineList().size(); i++) {
+
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("unexpected loss of connection to client");
+        }
+        return null;
+    }
+
+    public void sendToAll(String clientName, String msgTo, String input) {
+        System.out.println(clientName + " to ALL " + input);
+        queue.add(new MessageHandler(clientName, msgTo, input));
     }
 
     public void sendMsgTo(String clientName,String msgTo, String input) {
-        MessageHandler message = new MessageHandler(clientName, msgTo, input);
+        System.out.println(clientName + " to " + msgTo + ": " + input);
+        queue.add(new MessageHandler(clientName, msgTo, input));
     }
 
     public PrintWriter getPw() {

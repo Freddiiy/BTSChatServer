@@ -15,17 +15,29 @@ public class Dispatcher extends Thread {
     @Override
     public void run() {
         try {
-            String outMsg = "";
+            MessageHandler messageObject;
+            String message = "";
+            String messageFrom = "";
+            String messageTo = "";
             while (true) {
-                outMsg = messages.take().getMessage();
-                System.out.println("to ALL: " + outMsg);
-                String[] nameSplit = outMsg.split(":", 2);
+                messageObject = messages.take();
+                message = messageObject.getMessage();
+                messageFrom = messageObject.getMessageFrom();
+                messageTo = messageObject.getMessageTo();
 
-                String clientName = nameSplit[0];
-                outMsg = nameSplit[1];
-                for (ClientHandler client : clients) {
-                    if (!client.getClientName().equals(clientName))
-                    client.getPw().println(clientName + ": " + outMsg);
+                if (!messageTo.equals("ALL"))
+                    for (ClientHandler client : clients) {
+                        if(client.getClientName().equalsIgnoreCase(messageTo)) {
+                            client.getPw().println("Whisper from " + messageFrom + ": " + message);
+                        } else {
+                            if (client.getClientName().equalsIgnoreCase(messageFrom)) {
+                                client.getPw().println(messageFrom + " could not be found.");
+                            }
+                        }
+                } else if(messageTo.equals("ALL")) {
+                    for (ClientHandler client : clients) {
+                        client.getPw().println(messageFrom + " to ALL: " + message);
+                    }
                 }
             }
         } catch (InterruptedException e) {
