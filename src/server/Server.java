@@ -5,10 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.*;
 
-public class EchoServer {
+public class Server {
     private int port;
 
-    public EchoServer(int port) {
+    public Server(int port) {
         this.port = port;
     }
 

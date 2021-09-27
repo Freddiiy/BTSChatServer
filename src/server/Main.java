@@ -5,10 +5,10 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-	    EchoServer echoServer = new EchoServer(8285);
+	    Server server = new Server(8285);
 
         try {
-            echoServer.startServer();
+            server.startServer();
         } catch (IOException e) {
             e.printStackTrace();
         }
