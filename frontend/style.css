@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body{
-    background-image: url(images/backgroundChatSever2.png);
+    background-image: url(images/index/backgroundChatSever2.png);
     font-family: 'poppins';
     margin: 0;
 }
@@ -164,5 +164,5 @@ input[type="submit"]{
    margin-top: 1em;
 }
 
-    
+
 
