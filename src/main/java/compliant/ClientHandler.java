@@ -3,6 +3,7 @@ package compliant;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
@@ -58,7 +59,7 @@ public class ClientHandler implements Runnable{
         pw.println("Hello " + this.clientName + " and welcome. \n---------------------------------------\n" +
                 "Online users: " + onlineList.getOnlineUsers()+ "\n---------------------------------------\n");
 
-        while (!msg.toUpperCase().equals("#CLOSE")) {
+        while (!msg.toUpperCase().equals("CLOSE#")) {
             try {
                 msg = scanner.nextLine();
             } catch (NoSuchElementException e) {
@@ -70,23 +71,28 @@ public class ClientHandler implements Runnable{
             String data;
             try {
                 String[] action = msg.split("#", 2);
+                System.out.println(Arrays.toString(action));
                 command = action[0].toUpperCase();
+                System.out.println("Current command is: " + command);
                 data = action[1];
 
                 switch (command) {
-                    case "SEND#" -> {
+                    case "SEND" -> {
                         String dataArray[] = data.split("#", 2);
                         String msgTo = dataArray[0].toUpperCase();
                         data = dataArray[1];
                         sendMsgTo(clientName, msgTo, data);
                     }
-                    case "ONLINE#" -> pw.println("Online users: " + onlineList.getOnlineUsers());
-                    default -> pw.println("Not recognised");
+                    case "ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
+                    case "CLOSE" -> {
+                        pw.println("Closing connection...");
+                        closeAndRemove();
+                    }
+                    default -> pw.println("Command not recognised");
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-                pw.println("Not recognised");
+                pw.println("Not recognised, try adding '#' after you command.");
             }
-
         }
 
         pw.println("Closing connection...");
