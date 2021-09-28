@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body{
+    background-image: url(images/index/backgroundChatSever2.png);
+    font-family: 'poppins';
+    margin: 0;
+}
+
+.logo{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+span{
+    color: #5865F2;
+}
+
+.navbar{
+    background-color: #2C2F33;
+    padding: 1em;
+}
+
+
+.container{
+    display: flex;
+    place-content: space-between;
+}
+
+.navbar nav{
+    display: flex;
+    justify-content: space-between;
+    background: none;
+    position: unset;
+    height: auto;
+    width: 100%;
+    padding: 0;
+}
+
+a{
+    color: white;
+    font-size: 1em;
+    padding: .1em 1em;
+    text-decoration: none;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.box{
+    width: 300px;
+    height: 270px;
+    padding: 40px;
+    text-align: center;
+    margin: auto;
+    margin-top: 5em;
+    background: #2C2F33;
+}   
+ 
+
+.picture2{
+    position:absolute;
+    right: 50%;
+    width: 30%;
+    margin-right: 300px;
+    margin-top: 45px;
+}
+
+ .loginHeader{
+    text-align: center;
+    color: white;
+    font-size: 25px;
+}
+
+label{
+    display: block;
+    font-size: 1em;
+    color: #8c9094;
+}
+
+.bottomLabel{
+    margin-top: 2em;  
+}
+
+input, textarea{
+    width: 85%;
+    padding: .8em;
+    margin-top: 0.5em;
+    border-radius: .2em;
+    border: 1px #23272A;
+    box-sizing: border-box;
+    background-color: #23272A;  
+    font-size: 1.1em;
+    color: white;
+}
+
+input[type="submit"]{
+    background-color: #5865F2;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    border: none;
+    margin-top: 2em;
+    border-radius: 5em;
+    display: inline-block;
+    padding: .8em 2em;
+    width: 14.5em;
+    cursor: pointer;
+    text-align: center;
+}
+
+
+/* ABOUT.HTML*/
+
+.imgContainer{
+    margin-left: 50px;
+}
+
+.img-with-text{
+    width: 10em;
+    float: left;
+    padding: 3em;
+}
+
+.img-with-text img{
+    border-radius: 80%;
+    width: 10em;
+    margin-top: 10px;
+}
+
+.img-with-text a{
+   padding: 3em;
+}
+
+.contributors{
+    margin-top: 45px;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+}
+
+/*Contact*/
+.contact{
+    width: 360px;
+    height: 330px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 5em;
+    margin: auto;
+    margin-left: 10em;
+    background: #2C2F33;
+}
+
+.question{
+    height: 150px;
+    width: 290px;
+}
+
+.questionLabel{
+   margin-top: 1em;
+}
+
+.phone{
+    width: 30em;
+    height: 30em;
+    margin-left: 50em;
+    margin-top: 0em;
+    position: absolute;
+}
+
+

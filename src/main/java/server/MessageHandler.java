@@ -29,14 +29,12 @@ public class MessageHandler {
     }
 
     public String jsonStringify() {
-        String jsonString =
+        return
                 "{" +
                 "messageFrom: "+messageFrom+"," +
                 "messageTo: "+messageTo+"," +
                 "message: "+message+
                 "}";
-
-        return jsonString;
     }
 
     public int getId() {
