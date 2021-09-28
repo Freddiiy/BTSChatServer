@@ -52,6 +52,38 @@ body{
     padding: 15px
 
 }
+.client-info p{
+    color: #008000;
+    font-weight: bold;
+    font-size:0.8em ;
+}
+.chats{
+width: 100px;
+padding: 0 15px;
+color: #fff;
+position: relative;
+font-size: 0.9em;
+}
+
+.client-chat{
+    width:  60px;
+    word-wrap: break-word;
+    background-color: #4f5d73c7;
+    padding:  7px 10px;
+    border-radius: 10px 10px 10px 0;
+    margin:  10px 0;
+}
+
+.my-chat{
+    width:  100px;
+    word-wrap: break-word;
+    background-color: #77b3d4;
+    padding:  7px 10px;
+    border-radius: 10px 10px 0px 10px;
+    margin:  10px 0px 1000px auto;
+
+}
+
 
 
 
