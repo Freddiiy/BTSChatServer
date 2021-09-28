@@ -25,7 +25,7 @@ public class Dispatcher extends Thread {
                 messageFrom = messageObject.getMessageFrom();
                 messageTo = messageObject.getMessageTo();
 
-                if (!messageTo.equals("ALL"))
+                if (!messageTo.equals("*"))
                     for (ClientHandler client : clients) {
                         if(client.getClientName().equalsIgnoreCase(messageTo)) {
                             client.getPw().println("Whisper from " + messageFrom + ": " + message);
@@ -34,7 +34,7 @@ public class Dispatcher extends Thread {
                                 client.getPw().println(messageFrom + " could not be found.");
                             }
                         }
-                } else if(messageTo.equals("ALL")) {
+                } else if(messageTo.equals("*")) {
                     for (ClientHandler client : clients) {
                         client.getPw().println(messageFrom + " to ALL: " + message);
                     }

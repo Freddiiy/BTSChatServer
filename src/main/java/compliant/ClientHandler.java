@@ -58,7 +58,7 @@ public class ClientHandler implements Runnable{
         pw.println("Hello " + this.clientName + " and welcome. \n---------------------------------------\n" +
                 "Online users: " + onlineList.getOnlineUsers()+ "\n---------------------------------------\n");
 
-        while (!msg.toUpperCase().equals("/CLOSE")) {
+        while (!msg.toUpperCase().equals("#CLOSE")) {
             try {
                 msg = scanner.nextLine();
             } catch (NoSuchElementException e) {
@@ -69,21 +69,18 @@ public class ClientHandler implements Runnable{
             String command;
             String data;
             try {
-                String[] action = msg.split(" ", 2);
+                String[] action = msg.split("#", 2);
                 command = action[0].toUpperCase();
                 data = action[1];
 
                 switch (command) {
-                    case "/ALL" ->
-                            //INSERT MESSAGE IN SHARED RESOURCE
-                            sendToAll(clientName, "ALL", data);
-                    case "/MSG" -> {
-                        String dataArray[] = data.split(" ", 2);
+                    case "SEND#" -> {
+                        String dataArray[] = data.split("#", 2);
                         String msgTo = dataArray[0].toUpperCase();
                         data = dataArray[1];
                         sendMsgTo(clientName, msgTo, data);
                     }
-                    case "/ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
+                    case "ONLINE#" -> pw.println("Online users: " + onlineList.getOnlineUsers());
                     default -> pw.println("Not recognised");
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
