@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OnlineList {
-    private CopyOnWriteArrayList<ClientHandler> onlineList = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<ClientHandler> onlineList = new CopyOnWriteArrayList<>();
 
     public void add(ClientHandler client) {
         onlineList.add(client);
@@ -22,12 +22,12 @@ public class OnlineList {
         boolean firstIter = true;
         try {
             for (ClientHandler clientHandler : onlineList) {
-                if (!firstIter) {
-                    onlineUsers += ", " + clientHandler.getClientName();
-                } else {
+                if (firstIter) {
                     onlineUsers += clientHandler.getClientName();
+                    firstIter = false;
+                } else {
+                    onlineUsers += ", " + clientHandler.getClientName();
                 }
-                firstIter = false;
             }
             onlineUsers += ".";
         } catch (NullPointerException e) {

@@ -18,7 +18,7 @@ class Reader extends Thread {
     public void run() {
         while(keepRunning) {
             try {
-                System.out.println("READER: " + scannerFromServer.nextLine());
+                System.out.println(scannerFromServer.nextLine());
             } catch (NoSuchElementException ns) {
                 System.out.println("CLIENT CONNECTION CLOSED...");
                 break;
