@@ -78,8 +78,8 @@ public class ClientHandler implements Runnable{
                             //INSERT MESSAGE IN SHARED RESOURCE
                             sendToAll(clientName, "ALL", data);
                     case "/MSG" -> {
-                        String dataArray[] = data.split(" ", 2);
-                        String msgTo = dataArray[0].toUpperCase();
+                        String[] dataArray = data.split(" ", 2);
+                        String msgTo = dataArray[0];
                         data = dataArray[1];
                         sendMsgTo(clientName, msgTo, data);
                     }
