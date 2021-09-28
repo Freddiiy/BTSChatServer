@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body{
-    background-image: url(images/backgroundChatSever2.png);
+    background-image: url(images/index/backgroundChatSever2.png);
     font-family: 'poppins';
     margin: 0;
 }
@@ -142,4 +142,27 @@ input[type="submit"]{
     text-align: center;
     font-size: 40px;
 }
+
+/*Contact*/
+.contact{
+    width: 360px;
+    height: 330px;
+    padding: 40px;
+    text-align: center;
+    margin: auto;
+    margin-left: 50em;
+    margin-top: 5em;
+    background: #2C2F33;
+}
+
+.question{
+    height: 150px;
+    width: 290px;
+}
+
+.questionLabel{
+   margin-top: 1em;
+}
+
+
 
