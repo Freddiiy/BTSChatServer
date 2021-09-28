@@ -17,7 +17,7 @@ public class Dispatcher extends Thread {
         try {
             String outMsg = "";
             while (true) {
-                outMsg = messages.take();
+                outMsg = messages.take().getName;
                 System.out.println("to ALL: " + outMsg);
                 String[] nameSplit = outMsg.split(":", 2);
 
