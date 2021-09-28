@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 
 public class ClientHandler implements Runnable{
-    private Socket client;
+    private Socket socket;
     private PrintWriter pw;
     private Scanner scanner;
     private BlockingQueue<MessageHandler> queue;
@@ -20,13 +20,13 @@ public class ClientHandler implements Runnable{
     private static int counter = 1;
 
     public ClientHandler(Socket client) throws IOException {
-        this.client = client;
+        this.socket = client;
         this.pw = new PrintWriter(client.getOutputStream(), true);
         this.scanner = new Scanner(client.getInputStream());
     }
 
     public ClientHandler(Socket client, BlockingQueue<MessageHandler> queue) throws IOException {
-        this.client = client;
+        this.socket = client;
         this.pw = new PrintWriter(client.getOutputStream(), true);
         this.scanner = new Scanner(client.getInputStream());
         this.queue = queue;
@@ -35,7 +35,7 @@ public class ClientHandler implements Runnable{
     }
 
     public ClientHandler(Socket client, PrintWriter pw, Scanner scanner, BlockingQueue<MessageHandler> queue, String clientName) throws IOException {
-        this.client = client;
+        this.socket = client;
         this.pw = new PrintWriter(client.getOutputStream());
         this.scanner = new Scanner(client.getInputStream());
         this.queue = queue;
@@ -79,7 +79,7 @@ public class ClientHandler implements Runnable{
                             sendToAll(clientName, "ALL", data);
                     case "/MSG" -> {
                         String dataArray[] = data.split(" ", 2);
-                        String msgTo = dataArray[0].toUpperCase();
+                        String msgTo = dataArray[0];
                         data = dataArray[1];
                         sendMsgTo(clientName, msgTo, data);
                     }
@@ -92,12 +92,8 @@ public class ClientHandler implements Runnable{
 
         }
 
-        try {
-            pw.println("Closing connection...");
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        pw.println("Closing connection...");
+        closeAndRemove();
     }
 
     public String insertName() {
@@ -121,6 +117,15 @@ public class ClientHandler implements Runnable{
     public void sendMsgTo(String clientName,String msgTo, String input) {
         System.out.println(clientName + " to " + msgTo + ": " + input);
         queue.add(new MessageHandler(clientName, msgTo, input));
+    }
+
+    public void closeAndRemove() {
+        try {
+            onlineList.remove(this);
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public PrintWriter getPw() {

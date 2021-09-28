@@ -9,8 +9,8 @@ public class OnlineList {
         onlineList.add(client);
     }
 
-    public void remove() {
-//        onlineList.remove(1);
+    public void remove(ClientHandler client) {
+        onlineList.remove(client);
     }
 
     public String getOnlineUsers() {

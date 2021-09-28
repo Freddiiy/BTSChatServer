@@ -29,12 +29,11 @@ public class Dispatcher extends Thread {
                     for (ClientHandler client : clients) {
                         if(client.getClientName().equalsIgnoreCase(messageTo)) {
                             client.getPw().println("Whisper from " + messageFrom + ": " + message);
-                        } else {
-                            if (client.getClientName().equalsIgnoreCase(messageFrom)) {
-                                client.getPw().println(messageFrom + " could not be found.");
-                            }
+                            break;
+                        } else if (client.getClientName().equalsIgnoreCase(messageFrom)){
+                            client.getPw().println("Users " + messageTo + " could not be found.");
                         }
-                } else if(messageTo.equals("ALL")) {
+                } else {
                     for (ClientHandler client : clients) {
                         client.getPw().println(messageFrom + " to ALL: " + message);
                     }
