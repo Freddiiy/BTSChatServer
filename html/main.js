@@ -11,11 +11,11 @@ socket.onclose = () => {
     console.log("connection lost")
 }
 // Connection opened
-websocket.addEventListener('open', function (event) {
+socket.addEventListener('open', function (event) {
     socket.send('Hello Server!');
 });
 
 // Listen for messages
-websocket.addEventListener('message', function (event) {
+socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
 });
