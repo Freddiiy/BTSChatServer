@@ -12,8 +12,7 @@ public class Dispatcher extends Thread {
         this.clients = clients;
     }
 
-    @Override
-    public void run() {
+    public void runDispatcher() {
         try {
             MessageHandler messageObject;
             String message = "";
@@ -33,7 +32,7 @@ public class Dispatcher extends Thread {
                         } else if (client.getClientName().equalsIgnoreCase(messageFrom)){
                             client.getPw().println("Users " + messageTo + " could not be found.");
                         }
-                } else {
+                    } else {
                     for (ClientHandler client : clients) {
                         client.getPw().println(messageFrom + " to ALL: " + message);
                     }
@@ -42,5 +41,9 @@ public class Dispatcher extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public void run() {
+        runDispatcher();
     }
 }

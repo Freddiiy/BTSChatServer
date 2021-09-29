@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -27,7 +28,7 @@ public class ClientHandler implements Runnable{
     public ClientHandler(Socket client) throws IOException {
         this.socket = client;
         this.pw = new PrintWriter(client.getOutputStream(), true);
-        this.scanner = new Scanner(client.getInputStream(), "UTF_8");
+        this.scanner = new Scanner(client.getInputStream(), StandardCharsets.UTF_8);
     }
 
     public ClientHandler(Socket client, BlockingQueue<MessageHandler> queue) throws IOException {
@@ -108,7 +109,7 @@ public class ClientHandler implements Runnable{
             OutputStream out = socket.getOutputStream();
             Scanner s = new Scanner(in, StandardCharsets.UTF_8);
 
-            String data = scanner.useDelimiter("\\r\\n\\r\\n").next();
+            String data = s.useDelimiter("\\r\\n\\r\\n").next();
             Matcher get = Pattern.compile("^GET").matcher(data);
             if (get.find()) {
                 Matcher match = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(data);
@@ -121,12 +122,24 @@ public class ClientHandler implements Runnable{
                         + "\r\n\r\n").getBytes(StandardCharsets.UTF_8);
                 out.write(response, 0, response.length);
 
-                System.out.println(out);
+                byte[] message = new byte[11];
+
+                byte[] decoded = new byte[6];
+                byte[] encoded = new byte[] { (byte) 198, (byte) 131, (byte) 130, (byte) 182, (byte) 194, (byte) 135 };
+                //TODO: FOUND KEY DECODER (3rd to 6th byte in inputstream)
+                byte[] key = new byte[] { (byte) 167, (byte) 225, (byte) 225, (byte) 210 };
+                for (int i = 0; i < encoded.length; i++) {
+                    decoded[i] = (byte) (encoded[i] ^ key[i & 0x3]);
+                }
             }
+
+            for (int i = 0; i < 12; i++) {
+                System.out.println(in.read());
+            }
+
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public String insertName() {
