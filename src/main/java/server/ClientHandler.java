@@ -5,10 +5,8 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.text.DecimalFormatSymbols;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -122,21 +120,39 @@ public class ClientHandler implements Runnable{
                         + "\r\n\r\n").getBytes(StandardCharsets.UTF_8);
                 out.write(response, 0, response.length);
 
-                byte[] message = new byte[11];
+                ArrayList<Integer> byteArray = new ArrayList<>();
+                for (int i = 0; i < 12; i++) {
+                    byteArray.add(in.read());
+                    System.out.println(i + " byteArray: " + byteArray.get(i));
+                }
 
-                byte[] decoded = new byte[6];
-                byte[] encoded = new byte[] { (byte) 198, (byte) 131, (byte) 130, (byte) 182, (byte) 194, (byte) 135 };
-                //TODO: FOUND KEY DECODER (3rd to 6th byte in inputstream)
-                byte[] key = new byte[] { (byte) 167, (byte) 225, (byte) 225, (byte) 210 };
+
+                byte[] decoded = new byte[byteArray.get(1) - 128];
+                byte[] encoded = new byte[] { (byte)(int) byteArray.get(6), (byte)(int) byteArray.get(7), (byte)(int) byteArray.get(8), (byte)(int) byteArray.get(9), (byte)(int) byteArray.get(10), (byte)(int) byteArray.get(11) };
+                byte[] key = new byte[] { (byte)(int) byteArray.get(2), (byte)(int) byteArray.get(3), (byte)(int) byteArray.get(4), (byte)(int) byteArray.get(5) };
                 for (int i = 0; i < encoded.length; i++) {
                     decoded[i] = (byte) (encoded[i] ^ key[i & 0x3]);
                 }
-            }
+                System.out.println(Arrays.toString(decoded));
 
-            for (int i = 0; i < 12; i++) {
-                System.out.println(in.read());
-            }
+                char[] decodedCharArray = new char[decoded.length];
+                for (int i = 0; i < decoded.length; i++) {
+                    decodedCharArray[i] = (char)decoded[i];
+                }
+                System.out.println(Arrays.toString(decodedCharArray));
 
+                String decodedString = new String(decodedCharArray);
+                System.out.println(decodedString);
+
+                //send back
+                char[] backCharArray = decodedString.toCharArray();
+                byte[] backByteArray = new byte[backCharArray.length];
+                for (int i = 0; i < backCharArray.length; i++) {
+                    backByteArray[i] = (byte)backCharArray[i];
+                }
+                System.out.println(Arrays.toString(backByteArray));
+                out.write(backByteArray);
+            }
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
@@ -188,7 +204,7 @@ public class ClientHandler implements Runnable{
 
     @Override
     public void run() {
-//        this.protocol();
+        //this.protocol();
         this.webProtocol();
         System.out.println("LOST CONNECTION TO " + Thread.currentThread().getName());
     }
