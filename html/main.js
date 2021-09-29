@@ -1,8 +1,12 @@
-const websocket = new WebSocket("ws://localhost:8285");
+//const socket = new WebSocket("ws://localhost:8285");
+const socket = new WebSocket('ws://localhost:8285');
 console.log("started");
-websocket.onopen = () => {
+
+socket.onopen = () => {
     console.log("connection estaplished")
+    socket.send('ping');
 }
-websocket.onclose = () => {
+
+socket.onclose = () => {
     console.log("connection lost")
 }

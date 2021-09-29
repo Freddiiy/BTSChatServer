@@ -1,11 +1,16 @@
 package server;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClientHandler implements Runnable{
     private Socket socket;
@@ -22,7 +27,7 @@ public class ClientHandler implements Runnable{
     public ClientHandler(Socket client) throws IOException {
         this.socket = client;
         this.pw = new PrintWriter(client.getOutputStream(), true);
-        this.scanner = new Scanner(client.getInputStream());
+        this.scanner = new Scanner(client.getInputStream(), "UTF_8");
     }
 
     public ClientHandler(Socket client, BlockingQueue<MessageHandler> queue) throws IOException {
@@ -48,6 +53,7 @@ public class ClientHandler implements Runnable{
     public void protocol() {
         String msg = "";
         pw.println("What is your name?: ");
+
         try {
             clientName = scanner.nextLine();
         } catch (NoSuchElementException e) {
@@ -96,6 +102,33 @@ public class ClientHandler implements Runnable{
         closeAndRemove();
     }
 
+    public void webProtocol() {
+        try {
+            InputStream in = socket.getInputStream();
+            OutputStream out = socket.getOutputStream();
+            Scanner s = new Scanner(in, StandardCharsets.UTF_8);
+
+            String data = scanner.useDelimiter("\\r\\n\\r\\n").next();
+            Matcher get = Pattern.compile("^GET").matcher(data);
+            if (get.find()) {
+                Matcher match = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(data);
+                match.find();
+                byte[] response = ("HTTP/1.1 101 Switching Protocols\r\n"
+                        + "Connection: Upgrade\r\n"
+                        + "Upgrade: websocket\r\n"
+                        + "Sec-WebSocket-Accept: "
+                        + Base64.getEncoder().encodeToString(MessageDigest.getInstance("SHA-1").digest((match.group(1) + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").getBytes(StandardCharsets.UTF_8)))
+                        + "\r\n\r\n").getBytes(StandardCharsets.UTF_8);
+                out.write(response, 0, response.length);
+
+                System.out.println(out);
+            }
+        } catch (NoSuchAlgorithmException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public String insertName() {
         try {
             String tmpClientName = null;
@@ -142,7 +175,8 @@ public class ClientHandler implements Runnable{
 
     @Override
     public void run() {
-        this.protocol();
+//        this.protocol();
+        this.webProtocol();
         System.out.println("LOST CONNECTION TO " + Thread.currentThread().getName());
     }
 }

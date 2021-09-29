@@ -33,7 +33,7 @@ public class Dispatcher extends Thread {
                         } else if (client.getClientName().equalsIgnoreCase(messageFrom)){
                             client.getPw().println("Users " + messageTo + " could not be found.");
                         }
-                } else if(messageTo.equals("*")) {
+                } else {
                     for (ClientHandler client : clients) {
                         client.getPw().println(messageFrom + " to ALL: " + message);
                     }

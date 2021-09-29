@@ -24,6 +24,8 @@ public class Server {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         while (true) {
             Socket client = serverSocket.accept(); //Blocking call
+
+            System.out.println("Connection established to client");
             ClientHandler cl = new ClientHandler(client, messageHandler);
             clients.add(cl);
             executorService.execute(cl);
