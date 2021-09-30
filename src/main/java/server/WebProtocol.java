@@ -77,8 +77,6 @@ public class WebProtocol {
                     backByteArray[i] = (byte)backCharArray[i];
                 }
                 System.out.println(Arrays.toString(backByteArray));
-
-                pw.println(decodedString);
             }
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
