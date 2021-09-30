@@ -1,5 +1,7 @@
 package server;
 
+import compliant.Ascii;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -88,7 +90,7 @@ public class ClientHandler implements Runnable{
                         sendMsgTo(clientName, msgTo, data);
                     }
                     case "/ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
-
+                    case "/ASCII" -> pw.println(new Ascii().getRandomArt());
                     case "#ALL" ->
                             sendToAll(clientName, "ALL", data);
                     case "#MSG" -> {
@@ -98,6 +100,7 @@ public class ClientHandler implements Runnable{
                         sendMsgTo(clientName, msgTo, data);
                     }
                     case "#ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
+                    case "#ASCII" -> pw.println(new Ascii().getRandomArt());
                     default -> pw.println("Not recognised");
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
