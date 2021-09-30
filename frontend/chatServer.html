@@ -7,40 +7,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BornToSpawn</title>
+    <style>
+      body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    #message-container {
+      width: 80%;
+      max-width: 1200px;
+    }
+
+    #message-container div {
+      background-color: #CCC;
+      padding: 5px;
+    }
+
+    #message-container div:nth-child(2n) {
+      background-color: #FFF;
+    }
+
+    #send-container {
+      position: fixed;
+      padding-bottom: 30px;
+      bottom: 0;
+      background-color: white;
+      max-width: 1200px;
+      width: 80%;
+      display: flex;
+    }
+
+    #message-input {
+      flex-grow: 1;
+    }
+    </style>
     <link rel="stylesheet" href="styl2.css">
 </head>
 
 
 <body>
-
-    <div>
-       <div class="container">
-           <div class="chat-box">
-               <div class="client">
-                   <img src="images/chatServer/BTS2.png" alt="logo" />
-                   <div class="client-info">
-                        <h2> BTS </h2>
-                        <p> Online </p>
-                   </div>
-               </div>
-               <div class="chats">
-                   
-
-               </div>
-            <div class="chat-input">
-                <input type="text" value="Enter Message" placeholder="Enter Message" />
-                <button class="send-btn">
-                    <img src="images/chatServer/send2.png" alt="send-btn">
-                </button>
-        
-            </div>
-           </div>
-           <div class="chat-btn">
-
-           </div>
-       </div>
-    </div>
-
+ <div id="message-container"></div>
+<form id ="send-container">
+    <input type="text" id=message-input>
+    <button type="submit" id="send-button"> Send </button>
+</form>
 
 </body>
+
+
 
