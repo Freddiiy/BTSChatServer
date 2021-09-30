@@ -204,8 +204,8 @@ public class ClientHandler implements Runnable{
 
     @Override
     public void run() {
-        //this.protocol();
-        this.webProtocol();
+        this.protocol();
+        //this.webProtocol();
         System.out.println("LOST CONNECTION TO " + Thread.currentThread().getName());
     }
 }

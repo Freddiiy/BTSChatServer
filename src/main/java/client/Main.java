@@ -40,7 +40,7 @@ public class Main {
         String msg = "";
 
         try {
-            Socket socket = new Socket("localhost", 8285);
+            Socket socket = new Socket("167.99.130.122", 8285);
             Scanner scanner = new Scanner(socket.getInputStream());
             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
 
