@@ -26,3 +26,10 @@ Dagens Rapport:
 I dag har vi fået gjort det sidste af vores HTML og CSS færdigt.
 Vi har fået merget branches ind i main.
 Vi har også deployet serveren til droplet.
+
+
+/////////////////////////////////////////////////////
+
+
+![BTSChatServer](https://user-images.githubusercontent.com/58971957/135454512-e7ffd3a0-ecec-4a3a-9d12-fdd816feb78a.png)
+
