@@ -1,5 +1,5 @@
-//const socket = new WebSocket("ws://localhost:8285");
-const socket = new WebSocket('ws://83.94.37.212:6969');
+const socket = new WebSocket("ws://localhost:8285");
+//const socket = new WebSocket('ws://83.94.37.212:6969');
 console.log("started");
 
 socket.onopen = () => {
