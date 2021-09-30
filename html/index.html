@@ -16,7 +16,7 @@
 
             <nav>
                 <ul class="primary-nav">
-                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Downloads</a></li>
                     <li><a href="about.html">About</a></li>
                 </ul>
 
@@ -38,13 +38,11 @@
         <h2 class = "loginSmallText">
             Choose username and get started!
         </h2>
-    <form action="">
-        <label class="username" for="username">Username</label>
-        <input type="text" id="username" username="username">
-        
-        
+    <form action="chatServer.html">
+        <label class="usernamelabel" for="username">Username</label>
+        <input type="text" id="username" placeholder="name">
     
-        <input type="submit" class="login-cta" value="Continue">
+        <input type="submit" class="login-cta" value="Continue" onclick="send()">
     </form>
 
         <div class="needhelp">
