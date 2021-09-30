@@ -24,15 +24,14 @@ public class Dispatcher extends Thread {
                 messageFrom = messageObject.getMessageFrom();
                 messageTo = messageObject.getMessageTo();
 
-                if (!messageTo.equals("ALL"))
+                if (!messageTo.equals("ALL")) {
                     for (ClientHandler client : clients) {
-                        if(client.getClientName().equalsIgnoreCase(messageTo)) {
+                        if (client.getClientName().equalsIgnoreCase(messageTo)) {
                             client.getPw().println("Whisper from " + messageFrom + ": " + message);
                             break;
-                        } else if (client.getClientName().equalsIgnoreCase(messageFrom)){
-                            client.getPw().println("Users " + messageTo + " could not be found.");
                         }
-                    } else {
+                    }
+                } else {
                     for (ClientHandler client : clients) {
                         client.getPw().println(messageFrom + " to ALL: " + message);
                     }
