@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body{
+    background-image: url(/images/index/backgroundChatSever2.png);
+    background-size: 120em;
+
+    font-family: 'poppins';
+    margin: 0;
+}
+
+.navbar .page{
+    color:#5865F2;
+}
+
+
+.logo{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+span{
+    color: #5865F2;
+}
+
+.navbar{
+    background-color: #2C2F33;
+    padding: 1em;
+}
+
+
+.container{
+    display: flex;
+    place-content: space-between;
+}
+
+.navbar nav{
+    display: flex;
+    justify-content: space-between;
+    background: none;
+    position: unset;
+    height: auto;
+    width: 100%;
+    padding: 0;
+}
+
+a{
+    color: white;
+    font-size: 1em;
+    padding: .1em 1em;
+    text-decoration: none;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.box{
+    width: 360px;
+    height: 330px;
+    padding: 40px;
+    text-align: center;
+    margin: auto;
+    margin-top: 5em;
+    background: #2C2F33;
+}   
+ 
+
+.picture2{
+    position:absolute;
+    right: 50%;
+    width: 30%;
+    margin-right: 300px;
+    margin-top: 45px;
+}
+
+ .loginHeader{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+
+.loginSmallText{
+    margin-top: -15px;
+    color: #8c9094;
+    font-size: 15px;
+}
+
+label{
+    display: block;
+    font-size: 1em;
+    color: #8c9094;
+}
+
+.usernamelabel{
+    margin-right: 14em;
+    margin-top: 1.5em;
+}
+
+input, textarea{
+    width: 85%;
+    padding: .8em;
+    margin-top: 0.5em;
+    border-radius: .2em;
+    border: 1px #23272A;
+    box-sizing: border-box;
+    background-color: #23272A;  
+    font-size: 1.1em;
+    color: white;
+}
+
+input[type="submit"]{
+    background-color: #5865F2;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    border: none;
+    margin-top: 2em;
+    display: inline-block;
+    padding: .8em 2em;
+    width: 19em;
+    cursor: pointer;
+    text-align: center;
+}
+
+.contactUs{
+    font-size: 10.2px;
+    color: #5865F2;
+    position: absolute;
+    margin-left: 7.8em;
+}
+
+p{
+    margin-left: 2.9em;
+    color:#8c9094;
+    font-size: 10.2px;
+}
+
+.needhelp {
+    display: flex;
+    align-items: center;
+}
+
+/* ABOUT.HTML*/
+
+.imgContainer{
+    margin-left: 50px;
+}
+
+.img-with-text{
+    width: 10em;
+    float: left;
+    padding: 3em;
+}
+
+.img-with-text img{
+    border-radius: 80%;
+    width: 10em;
+    margin-top: 10px;
+}
+
+.img-with-text a{
+   padding: 3em;
+}
+
+.contributors{
+    margin-top: 45px;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+}
+
+/*Contact*/
+.contact{
+    width: 360px;
+    height: 330px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 15em;
+    margin: auto;
+    margin-left: 30em;
+    background: #2C2F33;
+}
+
+.question{
+    height: 150px;
+    width: 305px;
+}
+
+.questionLabel{
+   margin-top: 1em;
+}
+
+.phone{
+    width: 30em;
+    height: 30em;
+    margin-left: 50em;
+    margin-top: 0em;
+    position: absolute;
+}
+
+

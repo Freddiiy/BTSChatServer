@@ -1,0 +1,1 @@
+java -cp BTS-chatserver.jar server.Main 8285
