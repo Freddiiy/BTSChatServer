@@ -1,9 +1,12 @@
 const socket = new WebSocket("ws://localhost:8285");
-//const socket = new WebSocket('ws://83.94.37.212:6969');
+
 console.log("started");
 
 socket.onopen = () => {
     console.log("connection estaplished")
+    var send = "abcdef";
+    socket.send(send);
+    console.log(send);
 }
 
 socket.onclose = () => {
@@ -11,9 +14,6 @@ socket.onclose = () => {
 }
 // Connection opened
 socket.addEventListener('open', function (event) {
-var send = "abcdef";
-    socket.send(send);
-    console.log(send);
 });
 
 socket.onmessage = ({ data }) => {
@@ -24,4 +24,3 @@ socket.onmessage = ({ data }) => {
 socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
 });
-
