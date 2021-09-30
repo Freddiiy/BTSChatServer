@@ -4,7 +4,6 @@ console.log("started");
 
 socket.onopen = () => {
     console.log("connection estaplished")
-    socket.send('ping');
 }
 
 socket.onclose = () => {
@@ -12,14 +11,19 @@ socket.onclose = () => {
 }
 // Connection opened
 socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!');
+var send = "abcdef";
+    socket.send(send);
+    console.log(send);
 });
+
+socket.onmessage = ({ data }) => {
+    console.log(data);
+}
 
 // Listen for messages
 socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
 });
-
 
 //send username 
 var username = document.getElementById("username");

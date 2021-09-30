@@ -84,6 +84,7 @@ public class ClientHandler implements Runnable{
                         sendMsgTo(clientName, msgTo, data);
                     }
                     case "ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
+                    case "ASCII" -> pw.println(new Ascii().getRandomArt());
                     case "CLOSE" -> {
                         pw.println("Closing connection...");
                         closeAndRemove();
