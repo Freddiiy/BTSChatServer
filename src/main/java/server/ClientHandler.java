@@ -80,7 +80,6 @@ public class ClientHandler implements Runnable{
 
                 switch (command) {
                     case "/ALL" ->
-                            //INSERT MESSAGE IN SHARED RESOURCE
                             sendToAll(clientName, "ALL", data);
                     case "/MSG" -> {
                         String[] dataArray = data.split(" ", 2);
@@ -89,6 +88,16 @@ public class ClientHandler implements Runnable{
                         sendMsgTo(clientName, msgTo, data);
                     }
                     case "/ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
+
+                    case "#ALL" ->
+                            sendToAll(clientName, "ALL", data);
+                    case "#MSG" -> {
+                        String[] dataArray = data.split(" ", 2);
+                        String msgTo = dataArray[0];
+                        data = dataArray[1];
+                        sendMsgTo(clientName, msgTo, data);
+                    }
+                    case "#ONLINE" -> pw.println("Online users: " + onlineList.getOnlineUsers());
                     default -> pw.println("Not recognised");
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -151,7 +160,8 @@ public class ClientHandler implements Runnable{
                     backByteArray[i] = (byte)backCharArray[i];
                 }
                 System.out.println(Arrays.toString(backByteArray));
-                out.write(backByteArray);
+
+                pw.println(decodedString);
             }
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();

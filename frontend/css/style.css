@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body{
-    background-image: url(images/index/backgroundChatSever2.png);
+    background-image: url(/images/index/backgroundChatSever2.png);
+    background-size: 120em;
+
     font-family: 'poppins';
     margin: 0;
 }
+
+.navbar .page{
+    color:#5865F2;
+}
+
 
 .logo{
     color: white;
@@ -88,7 +95,7 @@ label{
     color: #8c9094;
 }
 
-.username{
+.usernamelabel{
     margin-right: 14em;
     margin-top: 1.5em;
 }
