@@ -21,7 +21,7 @@ public class WebProtocol {
         this.socket = socket;
     }
 
-    public void webProtocol() {
+    public void protocol() {
         try {
             InputStream in = socket.getInputStream();
             OutputStream out = socket.getOutputStream();
@@ -47,12 +47,18 @@ public class WebProtocol {
                 }
 
 
-                byte[] decoded = new byte[byteArray.get(1) - 128];
-                byte[] encoded = new byte[] { (byte)(int) byteArray.get(6), (byte)(int) byteArray.get(7), (byte)(int) byteArray.get(8), (byte)(int) byteArray.get(9), (byte)(int) byteArray.get(10), (byte)(int) byteArray.get(11) };
+                byte[] decoded = new byte[byteArray.get(1) - 128]; //gets the size of the message by taking the second byte in the byte array and -128 with it
+                int j=0;
+                System.out.println("size: " + byteArray.size());
+                byte[] encoded = new byte[byteArray.size()-6];
+                for (Integer b : byteArray) {
+                    encoded[j++] = (byte)(int)b;
+                }
                 byte[] key = new byte[] { (byte)(int) byteArray.get(2), (byte)(int) byteArray.get(3), (byte)(int) byteArray.get(4), (byte)(int) byteArray.get(5) };
                 for (int i = 0; i < encoded.length; i++) {
                     decoded[i] = (byte) (encoded[i] ^ key[i & 0x3]);
                 }
+
                 System.out.println(Arrays.toString(decoded));
 
                 char[] decodedCharArray = new char[decoded.length];
@@ -71,13 +77,15 @@ public class WebProtocol {
                     backByteArray[i] = (byte)backCharArray[i];
                 }
                 System.out.println(Arrays.toString(backByteArray));
+
+                pw.println(decodedString);
             }
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void oldWebProtocol() {
+    public void oldProtocol() {
         try {
             InputStream in = socket.getInputStream();
             OutputStream out = socket.getOutputStream();
